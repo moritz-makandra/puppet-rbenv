@@ -8,6 +8,8 @@ define rbenv::rubygems (
   exec { "update_rubygems_${user}_${version}":
     command => "${home}/.rbenv/shims/gem update --system ${version}",
     unless  => "${home}/.rbenv/shims/gem -v | /bin/grep ${version}",
+    user    => $user,
+    cwd     => $home,
     require => Exec["rbenv::compile ${user} ${ruby}"],
   }
 
