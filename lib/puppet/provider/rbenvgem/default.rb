@@ -2,7 +2,11 @@ Puppet::Type.type(:rbenvgem).provide :default do
   desc 'Maintains gems inside an RBenv setup'
 
   def install
-    args = ['install', '--no-rdoc', '--no-ri']
+    args = if version[0].to_i == 1
+             ['install', '--no-rdoc', '--no-ri']
+           else
+             ['install', '--no-document']
+           end
     args << "-v#{resource[:ensure]}" unless resource[:ensure].is_a?(Symbol)
     args << ['--source', "'#{resource[:source]}'"] if resource[:source] != ''
     args << gem_name
@@ -20,6 +24,10 @@ Puppet::Type.type(:rbenvgem).provide :default do
 
   def current
     list
+  end
+
+  def version
+    gem '-v'
   end
 
   private
