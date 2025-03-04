@@ -8,6 +8,16 @@ describe 'rbenv::compile', :type => :define do
   let(:bundler)      { '1.3.4' }
   let(:params)       { {:user => user, :ruby => ruby_version, :global => true, :bundler => bundler} }
 
+
+  let(:pre_condition){
+    <<~PP
+      rbenv::install { "#{user}":
+        group => '',
+        home  => '/project'
+      }
+    PP
+  }
+
   it "installs ruby of the chosen version" do
     should contain_exec("rbenv::compile #{user} #{ruby_version}").
       with_command("rbenv install #{ruby_version} && touch #{dot_rbenv}/.rehash")
