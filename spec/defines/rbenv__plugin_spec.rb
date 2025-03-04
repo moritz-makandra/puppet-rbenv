@@ -10,6 +10,15 @@ describe 'rbenv::plugin', :type => :define do
 
   let(:target_path) { "#{dot_rbenv}/plugins/#{plugin_name}" }
 
+  let(:pre_condition){
+    <<~PP
+      rbenv::install { "#{user}":
+        group => '',
+        home  => '/project'
+      }
+    PP
+  }
+
   it 'clones repository to the right path' do
     should contain_exec("rbenv::plugin::checkout #{user} #{plugin_name}").with(
       :command => "git clone #{source} #{target_path}",
