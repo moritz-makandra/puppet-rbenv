@@ -1,0 +1,20 @@
+---
+rbenv::dependencies::packages:
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - bzip2
+  - flex
+  - gcc
+  - gcc-c++
+  - gettext
+  - libffi-devel
+  - libtool
+  - make
+  - openssl-devel
+  - patch
+  - perl-FindBin
+  - pkgconfig
+  - readline-devel
+  - zlib-devel

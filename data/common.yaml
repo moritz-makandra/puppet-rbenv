@@ -1,0 +1,9 @@
+---
+lookup_options:
+  rbenv::dependencies::packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
+rbenv::dependencies::packages:
+  - curl
+  - git
