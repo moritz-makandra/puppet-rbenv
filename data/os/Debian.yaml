@@ -1,0 +1,20 @@
+---
+rbenv::dependencies::packages:
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - build-essential
+  - build-essentials
+  - libc6-dev
+  - libffi-dev
+  - libreadline-dev
+  - libreadline8
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libyaml-dev
+  - make
+  - openssl
+  - zlib1g
+  - zlib1g-dev
