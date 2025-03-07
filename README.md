@@ -207,3 +207,9 @@ pluginsync = true
 MIT License.
 
 Copyright 2012-2015 Andreas Loupasakis, Marcello Barnaba <vjt@openssl.it>, Fabio Rehm
+
+## Transfer NOTICE
+
+This Plugin was originally authored by [alup (Andreas Loupasakis)](https://github.com/alup)
+
+Previously: [alup/puppet-rbenv: Puppet manifest for rbenv installation](https://github.com/alup/puppet-rbenv)
