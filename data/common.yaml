@@ -1,1 +1,26 @@
---- {}
+---
+lookup_options:
+  rbenv::dependencies::packages:
+    merge:
+      strategy: deep
+rbenv::dependencies::packages:
+  - autoconf
+  - automake
+  - binutils
+  - bison
+  - build-essential
+  - curl
+  - git
+  - libc6-dev
+  - libc6-dev
+  - libffi-dev
+  - libreadline-dev
+  - libreadline8
+  - libssl-dev
+  - libxml2-dev
+  - libxslt1-dev
+  - libyaml-dev
+  - make
+  - openssl
+  - zlib1g
+  - zlib1g-dev

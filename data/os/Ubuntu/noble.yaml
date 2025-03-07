@@ -1,0 +1,4 @@
+---
+rbenv::dependencies::packages:
+  - libreadline-dev
+  - libreadline8t64

@@ -1,0 +1,13 @@
+---
+rbenv::dependencies::packages:
+  - libreadline6
+  - bison
+  - build-essentials
+  - libreadline6-dev
+  - zlib1g
+  - zlib1g-dev
+  - libffi-dev
+  - libssl-dev
+  - libyaml-dev
+  - libxml2-dev
+  - libxslt1-dev
