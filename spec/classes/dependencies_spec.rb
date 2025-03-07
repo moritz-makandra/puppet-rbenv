@@ -1,25 +1,50 @@
 require 'spec_helper'
 
 describe 'rbenv::dependencies' do
-  let(:title) { 'rbenv::dependencies' }
+  on_supported_os.each do |os, os_facts|
 
-  context 'Ubuntu' do
-    let(:facts) { {:osfamily => 'debian'} }
-    it { should include_class('rbenv::dependencies::ubuntu') }
-  end
+    let(:facts){ os_facts }
+    let(:hiera_config){ 'hiera.yaml'}
 
-  context 'RedHat' do
-    let(:facts) { {:osfamily => 'redhat'} }
-    it { should include_class('rbenv::dependencies::centos') }
-  end
+    context "on #{os}" do
 
-  context 'Suse' do
-    let(:facts) { {:osfamily => 'suse'} }
-    it { should include_class('rbenv::dependencies::suse') }
-  end
+      it { is_expected.to compile }
 
-  context 'Amazon Linux' do
-    let(:facts) { {:osfamily => 'Linux'} }
-    it { should include_class('rbenv::dependencies::centos') }
+      [
+        'autoconf',
+        'automake',
+        'binutils',
+        'bison',
+        'build-essential',
+        'curl',
+        'git',
+        'libc6-dev',
+        'libffi-dev',
+        'libreadline-dev',
+        'libssl-dev',
+        'libxml2-dev',
+        'libxslt1-dev',
+        'libyaml-dev',
+        'make',
+        'openssl',
+        'zlib1g',
+        'zlib1g-dev',
+      ]
+      .each do |package|
+        it { is_expected.to contain_package(package) }
+      end
+
+      describe 'readline is installed in the correct version' do
+        case os_facts[:os]['distro']['codename']
+        when 'focal'
+          it { is_expected.to contain_package('libreadline8') }
+        when 'jammy'
+          it { is_expected.to contain_package('libreadline8') }
+        when 'noble'
+          it { is_expected.to contain_package('libreadline8t64') }
+          it { is_expected.not_to contain_package('libreadline8') }
+        end
+      end
+    end
   end
 end
