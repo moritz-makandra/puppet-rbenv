@@ -2,15 +2,15 @@ Puppet::Type.newtype(:rbenvgem) do
   desc 'A Ruby Gem installed inside an rbenv-installed Ruby'
 
   ensurable do
-    newvalue(:present) { provider.install   }
-    newvalue(:absent ) { provider.uninstall }
+    newvalue(:present) { provider.install }
+    newvalue(:absent) { provider.uninstall }
 
-    newvalue(:latest) {
+    newvalue(:latest) do
       provider.uninstall if provider.current
       provider.install
-    }
+    end
 
-    newvalue(/./)  do
+    newvalue(%r{.}) do
       provider.uninstall if provider.current
       provider.install
     end
@@ -62,5 +62,4 @@ Puppet::Type.newtype(:rbenvgem) do
   newparam(:source) do
     desc 'The gem source'
   end
-
 end
