@@ -1,3 +1,4 @@
+* Fix tests for rbenv::gem
 * Provide option for system level setup
 * Make global ruby installation optional
 * Provide Vagrant integration instruction.
