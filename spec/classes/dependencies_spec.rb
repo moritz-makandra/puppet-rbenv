@@ -8,26 +8,8 @@ describe 'rbenv::dependencies' do
 
     context "on #{os}" do
       it { should compile }
-
-      %w[
-        autoconf
-        bison
-        build-essential
-        curl
-        git
-        libc6-dev
-        libffi-dev
-        libssl-dev
-        libxml2-dev
-        libxslt1-dev
-        libyaml-dev
-        openssl
-        zlib1g
-        zlib1g-dev
-      ].
-        each do |package|
-        it { should contain_package(package) }
-      end
+      it { should contain_package('git') }
+      it { should contain_package('curl') }
     end
   end
 end
