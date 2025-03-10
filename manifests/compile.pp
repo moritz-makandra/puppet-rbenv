@@ -1,7 +1,7 @@
 # The following part compiles and installs the chosen ruby version,
 # using the "ruby-build" rbenv plugin.
 #
-define rbenv::compile(
+define rbenv::compile (
   $user,
   $ruby           = $title,
   $group          = $user,
@@ -13,7 +13,6 @@ define rbenv::compile(
   $configure_opts = '--disable-install-doc',
   $bundler        = present,
 ) {
-
   # Workaround http://projects.puppetlabs.com/issues/9848
   $home_path = $home ? { '' => "/home/${user}", default => $home }
   $root_path = $root ? { '' => "${home_path}/.rbenv", default => $root }
@@ -22,7 +21,7 @@ define rbenv::compile(
   $shims       = "${root_path}/shims"
   $versions    = "${root_path}/versions"
   $global_path = "${root_path}/version"
-  $path        = [ $shims, $bin, '/bin', '/usr/bin' ]
+  $path        = [$shims, $bin, '/bin', '/usr/bin']
 
   # Keep flag saves source tree after building.
   # This is required for some gems (e.g. debugger)
@@ -33,7 +32,7 @@ define rbenv::compile(
     $keep_flag = ''
   }
 
-  if ! defined( Class['rbenv::dependencies'] ) {
+  if ! defined( Class['rbenv::dependencies']) {
     require rbenv::dependencies
   }
 
@@ -44,10 +43,10 @@ define rbenv::compile(
   if ! defined($custom_or_default) and ! defined($default) {
     debug("No ruby-build found for ${user}, going to add the default one")
     rbenv::plugin::rubybuild { "rbenv::rubybuild::${user}":
-      user   => $user,
-      group  => $group,
-      home   => $home,
-      root   => $root
+      user  => $user,
+      group => $group,
+      home  => $home,
+      root  => $root,
     }
   }
 
@@ -60,7 +59,7 @@ define rbenv::compile(
       home    => $home,
       root    => $root,
       require => Rbenv::Plugin["rbenv::plugin::rubybuild::${user}"],
-      before  => Exec["rbenv::compile ${user} ${ruby}"]
+      before  => Exec["rbenv::compile ${user} ${ruby}"],
     }
   }
 
@@ -72,7 +71,7 @@ define rbenv::compile(
     user        => $user,
     group       => $group,
     cwd         => $home_path,
-    environment => [ "HOME=${home_path}", "CONFIGURE_OPTS=${configure_opts}" ],
+    environment => ["HOME=${home_path}", "CONFIGURE_OPTS=${configure_opts}"],
     creates     => "${versions}/${ruby}",
     path        => $path,
     logoutput   => 'on_failure',
@@ -86,14 +85,14 @@ define rbenv::compile(
     group       => $group,
     cwd         => $home_path,
     onlyif      => "[ -e '${root_path}/.rehash' ]",
-    environment => [ "HOME=${home_path}" ],
+    environment => ["HOME=${home_path}"],
     path        => $path,
     logoutput   => 'on_failure',
   }
 
   # Install bundler
   #
-  rbenv::gem {"rbenv::bundler ${user} ${ruby}":
+  rbenv::gem { "rbenv::bundler ${user} ${ruby}":
     ensure => $bundler,
     user   => $user,
     ruby   => $ruby,
@@ -110,7 +109,7 @@ define rbenv::compile(
       content => "${ruby}\n",
       owner   => $user,
       group   => $group,
-      require => Exec["rbenv::compile ${user} ${ruby}"]
+      require => Exec["rbenv::compile ${user} ${ruby}"],
     }
   }
 }
