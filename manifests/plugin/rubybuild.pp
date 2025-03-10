@@ -1,4 +1,4 @@
-define rbenv::plugin::rubybuild(
+define rbenv::plugin::rubybuild (
   $user   = $title,
   $source = 'https://github.com/sstephenson/ruby-build.git',
   $group  = $user,
@@ -11,6 +11,6 @@ define rbenv::plugin::rubybuild(
     plugin_name => 'ruby-build',
     group       => $group,
     home        => $home,
-    root        => $root
+    root        => $root,
   }
 }

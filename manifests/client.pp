@@ -1,4 +1,4 @@
-define rbenv::client(
+define rbenv::client (
   $user,
   $home,
   $ruby,
@@ -10,37 +10,37 @@ define rbenv::client(
     fail("Ruby version ${ruby} is not compiled for ${owner}")
   }
 
-  file {"${user}/.rbenv":
+  file { "${user}/.rbenv":
     ensure => link,
     path   => "${home}/.rbenv",
     target => "${source}/.rbenv",
   }
 
-  file {"${user}/${rc}":
+  file { "${user}/${rc}":
     ensure => link,
     path   => "${home}/${rc}",
     target => "${source}/${rc}",
   }
 
-  file {"${user}/.gemrc":
+  file { "${user}/.gemrc":
     ensure => link,
     path   => "${home}/.gemrc",
     target => "${source}/.gemrc",
   }
 
-  file {"${user}/.rbenv-version":
-    ensure  => present,
+  file { "${user}/.rbenv-version":
+    ensure  => file,
     path    => "${home}/.rbenv-version",
     content => "${ruby}\n",
   }
 
-  file {"${user}/bin":
+  file { "${user}/bin":
     ensure => directory,
     path   => "${home}/bin",
     owner  => $user,
   }
 
-  file {"${user}/bin/rbenv":
+  file { "${user}/bin/rbenv":
     ensure => link,
     path   => "${home}/bin/rbenv",
     target => "${source}/.rbenv/bin/rbenv",

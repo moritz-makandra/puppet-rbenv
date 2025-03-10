@@ -1,4 +1,4 @@
-define rbenv::plugin::rbenvvars(
+define rbenv::plugin::rbenvvars (
   $user   = $title,
   $source = 'https://github.com/sstephenson/rbenv-vars.git',
   $group  = $user,
@@ -11,6 +11,6 @@ define rbenv::plugin::rbenvvars(
     plugin_name => 'rbenv-vars',
     group       => $group,
     home        => $home,
-    root        => $root
+    root        => $root,
   }
 }
