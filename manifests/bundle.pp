@@ -1,11 +1,10 @@
-define rbenv::bundle(
+define rbenv::bundle (
   $home,
   $user,
   $group   = $user,
   $content = '',
   $gems    = ''
 ) {
-
   if ( $gems ) {
     $gemfile = template('rbenv/Gemfile.erb')
   } elsif ( $content ) {
@@ -14,8 +13,8 @@ define rbenv::bundle(
     fail('bundle requires either a gem list or a Gemfile')
   }
 
-  file {"${user}/Gemfile":
-    ensure  => present,
+  file { "${user}/Gemfile":
+    ensure  => file,
     path    => "${home}/Gemfile",
     owner   => $user,
     group   => $group,
@@ -24,7 +23,7 @@ define rbenv::bundle(
     require => Rbenv::Client[$user],
   }
 
-  exec {"${user} bundle":
+  exec { "${user} bundle":
     command   => "bundle --binstubs=${home}/bin --path=${home}/.bundle",
     cwd       => $home,
     user      => $user,

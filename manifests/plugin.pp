@@ -1,4 +1,4 @@
-define rbenv::plugin(
+define rbenv::plugin (
   $user,
   $source,
   $plugin_name = $title,
@@ -7,7 +7,6 @@ define rbenv::plugin(
   $root        = '',
   $timeout     = 100
 ) {
-
   $home_path   = $home ? { '' => "/home/${user}",       default => $home }
   $root_path   = $root ? { '' => "${home_path}/.rbenv", default => $root }
   $plugins     = "${root_path}/plugins"
@@ -48,5 +47,4 @@ define rbenv::plugin(
     require => Exec["rbenv::plugin::checkout ${user} ${plugin_name}"],
     onlyif  => 'git remote update; if [ "$(git rev-parse @{0})" = "$(git rev-parse @{u})" ]; then return 0; else return 1; fi ]',
   }
-
 }

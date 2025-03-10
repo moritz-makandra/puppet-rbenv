@@ -1,11 +1,10 @@
-define rbenv::install(
+define rbenv::install (
   $user  = $title,
   $group = $user,
   $home  = '',
   $root  = '',
   $rc    = '.profile'
 ) {
-
   # Workaround http://projects.puppetlabs.com/issues/9848
   $home_path = $home ? { '' => "/home/${user}", default => $home }
   $root_path = $root ? { '' => "${home_path}/.rbenv", default => $root }
@@ -13,7 +12,7 @@ define rbenv::install(
   $rbenvrc = "${home_path}/.rbenvrc"
   $shrc  = "${home_path}/${rc}"
 
-  if ! defined( Class['rbenv::dependencies'] ) {
+  if ! defined( Class['rbenv::dependencies']) {
     require rbenv::dependencies
   }
 
@@ -50,6 +49,6 @@ define rbenv::install(
     owner   => $user,
     group   => $group,
     path    => "${root_path}/cache",
-    require => Exec["rbenv::checkout ${user}"]
+    require => Exec["rbenv::checkout ${user}"],
   }
 }
