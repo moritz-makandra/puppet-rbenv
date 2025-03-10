@@ -1,0 +1,9 @@
+{
+  "name": "puppet-rbenv",
+  "version": "1.2.0",
+  "author": "Andreas Loupasakis",
+  "summary": "rbenv Ruby Version Manager module",
+  "license": "MIT",
+  "source": "https://github.com/alup/puppet-rbenv",
+  "dependencies": []
+}
