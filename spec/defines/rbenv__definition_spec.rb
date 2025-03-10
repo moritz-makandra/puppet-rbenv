@@ -8,6 +8,19 @@ describe 'rbenv::definition', :type => :define do
   let(:target_path)  { "#{dot_rbenv}/plugins/ruby-build/share/ruby-build/#{ruby_version}" }
   let(:params)       { {:user => user, :ruby => ruby_version, :source => definition} }
 
+  let(:pre_condition){
+    <<~PP
+      rbenv::install { "#{user}":
+        group => '',
+        home  => '/project'
+      }
+      rbenv::plugin {"ruby-build":
+        user   => '#{user}',
+        source => 'git://gist.com/ree',
+      }
+    PP
+  }
+
   context 'puppet' do
     let(:definition)   { 'puppet:///custom-definition' }
     it 'copies the file to the right path' do
