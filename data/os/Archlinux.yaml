@@ -1,0 +1,11 @@
+---
+rbenv::dependencies::packages:
+  - base-devel
+  - libffi
+  - libxml2
+  - libxslt
+  - libyaml
+  - openssl
+  - openssl
+  - readline
+  - zlib

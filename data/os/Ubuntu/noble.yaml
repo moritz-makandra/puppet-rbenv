@@ -1,0 +1,4 @@
+---
+rbenv::dependencies::packages:
+  - --libreadline8
+  - libreadline8t64
