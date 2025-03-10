@@ -1,22 +1,44 @@
-require 'rake'
+# Managed by modulesync - DO NOT EDIT
+# https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
+# Attempt to load voxpupuli-test (which pulls in puppetlabs_spec_helper),
+# otherwise attempt to load it directly.
 begin
-  require 'rspec/core/rake_task'
-  require 'puppet-lint/tasks/puppet-lint'
+  require 'voxpupuli/test/rake'
 rescue LoadError
-  require 'rubygems'
-  retry
+  begin
+    require 'puppetlabs_spec_helper/rake_tasks'
+  rescue LoadError
+  end
 end
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.pattern = 'spec/*/*_spec.rb'
+# load optional tasks for acceptance
+# only available if gem group releases is installed
+begin
+  require 'voxpupuli/acceptance/rake'
+rescue LoadError
 end
 
-task :test => :spec
-
-task :default => :test
-
-desc "Update AUTHORS file"
-task :authors do
-  sh "git shortlog -s | awk '{ print $2 \" \" $3 }' > AUTHORS"
+# load optional tasks for releases
+# only available if gem group releases is installed
+begin
+  require 'voxpupuli/release/rake_tasks'
+rescue LoadError
+  # voxpupuli-release not present
+else
+  GCGConfig.user = 'makandra'
+  GCGConfig.project = 'makandra-rbenv'
 end
+
+desc "Run main 'test' task and report merged results to coveralls"
+task test_with_coveralls: [:test] do
+  if Dir.exist?(File.expand_path('../lib', __FILE__))
+    require 'coveralls/rake/task'
+    Coveralls::RakeTask.new
+    Rake::Task['coveralls:push'].invoke
+  else
+    puts 'Skipping reporting to coveralls.  Module has no lib dir'
+  end
+end
+
+# vim: syntax=ruby
