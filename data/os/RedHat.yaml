@@ -11,6 +11,7 @@ rbenv::dependencies::packages:
   - gettext
   - libffi-devel
   - libtool
+  - libyaml-devel
   - make
   - openssl-devel
   - patch
