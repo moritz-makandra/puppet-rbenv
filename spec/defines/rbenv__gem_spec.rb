@@ -1,6 +1,17 @@
-# require 'spec_helper'
-#
-# describe 'rbenv::gem', :type => :define do
+require 'spec_helper'
+
+describe 'rbenv::gem', :type => :define do
+
+  describe 'fail when ruby is not installed' do
+    let(:ruby) { '0.0.0' }
+    let(:user) { 'nobody' }
+
+    it 'raises error' do
+      # expect { should contain_class('foo') }.to raise_error
+      raise_error(Puppet::Error, /Rbenv-Ruby .* for user .* not found in catalog/)
+    end
+  end
+end
 #   shared_examples 'rbenvgem' do
 #     it do
 #       should contain_rbenvgem("#{user}/#{ruby_version}/#{gem_name}/#{_ensure}").with(
