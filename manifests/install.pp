@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 define rbenv::install (
   $user    = $title,
   $group   = $user,
@@ -22,10 +21,10 @@ define rbenv::install (
   vcsrepo { $root_path:
     ensure   => $ensure,
     provider => git,
-    source   => 'git://github.com/sstephenson/rbenv.git',
+    source   => 'https://github.com/rbenv/rbenv.git',
     user     => $user,
     group    => $group,
-    revision => $version
+    revision => $version,
   }
 
   file { "rbenv::rbenvrc ${user}":
@@ -33,7 +32,7 @@ define rbenv::install (
     owner   => $user,
     group   => $group,
     content => template('rbenv/dot.rbenvrc.erb'),
-    require => Vcsrepo[$root_path]
+    require => Vcsrepo[$root_path],
   }
 
   exec { "rbenv::shrc ${user}":
@@ -42,7 +41,7 @@ define rbenv::install (
     group   => $group,
     unless  => "grep -q rbenvrc ${shrc}",
     path    => ['/bin', '/usr/bin', '/usr/sbin'],
-    require => Vcsrepo[$root_path]
+    require => Vcsrepo[$root_path],
   }
 
   file { "rbenv::cache-dir ${user}":
@@ -50,6 +49,6 @@ define rbenv::install (
     owner   => $user,
     group   => $group,
     path    => "${root_path}/cache",
-    require => Vcsrepo[$root_path]
+    require => Vcsrepo[$root_path],
   }
 }
