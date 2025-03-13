@@ -7,6 +7,10 @@
   "source": "https://github.com/makandra/puppet-rbenv",
   "dependencies": [
     {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">= 6.0.0 <i 8.0.0"
+    },
+    {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">=8.3.0 < 10.0.0"
     }
