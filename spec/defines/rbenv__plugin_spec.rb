@@ -16,35 +16,19 @@ describe 'rbenv::plugin', :type => :define do
       <<~PP
         rbenv::install { "#{user}":
           group => '',
-          home  => '/project'
         }
       PP
     }
 
     context "on #{os}" do
-      it 'clones repository to the right path' do
-        should contain_exec("rbenv::plugin::checkout #{user} #{plugin_name}").with(
-          :command => "git clone #{source} #{target_path}",
-          :user    => user,
-          :creates => target_path,
-          :require => /rbenv::plugins #{user}/,
-          :path    => ['/bin','/usr/bin','/usr/sbin']
+      it 'clones the plugin repo' do
+      should contain_vcsrepo(target_path).with(
+          # require: /rbenv::install #{user}/,
+          require: /File.*rbenv::plugins #{user}/,
+          user: user,
+          revision: 'master'
         )
       end
-
-      it 'pulls the latest plugin changes from their git repos' do
-        should contain_exec("rbenv::plugin::update #{user} #{plugin_name}").with(
-          :command => 'git pull',
-          :user    => user,
-          :cwd     => target_path,
-          :require => /rbenv::plugin::checkout #{user} #{plugin_name}/,
-          :path    => ['/bin','/usr/bin','/usr/sbin'],
-          :onlyif  => 'git remote update; ' \
-                      'if [ "$(git rev-parse @{0})" = "$(git rev-parse @{u})" ]; ' \
-                      'then return 0; else return 1; fi ]'
-        )
-      end
-
       context 'with source != git' do
         let(:source) { 'something != git' }
 

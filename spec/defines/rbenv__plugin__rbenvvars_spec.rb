@@ -10,7 +10,6 @@ describe 'rbenv::plugin::rbenvvars', :type => :define do
       <<~PP
         rbenv::install { "#{user}":
           group => '',
-          home  => '/project'
         }
       PP
     end

@@ -10,8 +10,7 @@ describe 'rbenv::install', :type => :define do
     context "on #{os}" do
       context 'install rbenv' do
         it "clones rbenv from the official repository" do
-          should contain_exec("rbenv::checkout #{user}").
-            with_command("git clone https://github.com/rbenv/rbenv.git /home/#{user}/.rbenv")
+          should contain_vcsrepo("/home/#{user}/.rbenv")
         end
 
         it "appends in a rc file, a command to include .rbenv/bin folder in PATH env variable" do
